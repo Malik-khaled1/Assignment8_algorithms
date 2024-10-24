@@ -10,15 +10,15 @@ node* isort(node* list) {
         return list;
     }
     
-    node* sorted_list = list;
-    node* current = list->next;
+    node* sorted_list = NULL;
+    node* current = list;
 
     while (current != NULL)
     {
         node *next_node = current->next;
         
 
-        if (current->data < sorted_list->data)
+        if (!sorted_list || current->data < sorted_list->data)
         {
             current->next = sorted_list;
             sorted_list = current;
@@ -26,7 +26,7 @@ node* isort(node* list) {
         else
         {
             node *temp  = sorted_list;
-            while (temp->next != NULL && temp->next->data < current->data)
+            while (temp->next && temp->next->data < current->data)
             {
                 temp = temp->next;
             }
@@ -35,14 +35,8 @@ node* isort(node* list) {
             temp->next = current;
         }
         
-        
-
-
         current = next_node;
     }
-    
-
-
 
     return sorted_list;
 

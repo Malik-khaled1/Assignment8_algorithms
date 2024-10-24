@@ -16,7 +16,7 @@ void initialize(queue *q) {
 
 bool empty(const queue *q) {
 
-    return q->size == 0; // Retuner true hvis størrelsen på køen er 0, ellers false
+    return q->front == NULL&& q->rear == NULL &&q->size == 0; // Retuner true hvis størrelsen på køen er 0, ellers false
 }
 
 bool full(const queue *q) {
@@ -36,6 +36,7 @@ void enqueue(queue *q, int x) {
 
     node *new_node = malloc(sizeof(node)); // Opret en ny node og alloker hukommelse til den
     new_node->data = x; // Indsæt dataen i den nye node
+    new_node->next = NULL;
 
     if (q->front == NULL && q->rear == NULL) // Hvis både fronten og bagenden af køen er NULL, så må køen være tom
     {
@@ -48,7 +49,8 @@ void enqueue(queue *q, int x) {
         q->rear = new_node; // Bagenden skal nu pege på den nye node. dvs at den nye bagende i køen nu er den nye node
   
     }
-    new_node->next = NULL; // Den nye nodes next skal pege på NULL
+    // new_node->next = NULL; // Den nye nodes next skal pege på NULL
+    //free(new_node);
     
     q->size++; // Øg størrelsen af køen med én
 }
@@ -72,6 +74,7 @@ int dequeue(queue *q) {
     
     int value = temp->data; // Gem værdien i den fjernede node
     free(temp); // Frigør hukommelsen
+    q->size--;
 
     return value; // Retuner værdien i den fjernede node
 
